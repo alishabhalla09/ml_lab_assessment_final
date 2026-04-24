@@ -1,9 +1,13 @@
 # 📘 Human Activity Recognition Studio - Documentation
 
+## 🌍 Live Deployment
+**App URL**: [https://alisha-bhalla-09-first-deployment.streamlit.app](https://alisha-bhalla-09-first-deployment.streamlit.app)
+
 ## 🌟 Project Overview
 This project is an end-to-end Machine Learning system designed to recognize human physical activities (such as **Walking**, **Standing**, **Laying**, **Walking Upstairs**, and **Walking Downstairs**) using smartphone sensor data. 
 
 The system uses unsupervised learning (**K-Means Clustering**) to group similar movement patterns from a 561-feature dataset collected from accelerometers and gyroscopes.
+
 
 ---
 
