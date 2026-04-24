@@ -1,35 +1,44 @@
 # 🏃 HAR Studio Pro: Human Activity Recognition
 
-This project helps you understand human movements (like walking or standing) using data from smartphone sensors. It uses Artificial Intelligence to find patterns and show them in a beautiful dashboard.
+An end-to-end Machine Learning project to recognize human movement using smartphone sensors.
 
 ---
 
-## 🚀 Quick Start
-To run this project right now:
+## 🌟 What This Project Does
+This studio takes complex signal data from accelerometers and gyroscopes to automatically identify if a person is standing, walking, or laying down. It turns "unreadable" sensor data into a visual intelligence dashboard.
 
-1. **Install libraries**:
+---
+
+## �️ Tech Stack
+- **Languages**: Python
+- **AI Libraries**: Scikit-Learn (K-Means, PCA)
+- **Interface**: Streamlit
+- **Visualization**: Matplotlib, Seaborn
+- **Data**: Pandas, NumPy
+
+---
+
+## 🚀 Quick Start (Local)
+
+1. **Install everything**:
    ```bash
-   pip install streamlit pandas numpy matplotlib seaborn scikit-learn
+   pip install -r requirements.txt
    ```
 
-2. **Prepare the AI**: (Run this first to train the model)
+2. **Prepare the models**:
    ```bash
    python analysis.py
    ```
 
-3. **Open the Dashboard**:
+3. **See the results**:
    ```bash
    streamlit run app.py
    ```
 
 ---
 
-## � Learn More
-For more details, check out these files:
-
-*   [**Installation Guide**](docs/installation.md) - How to set up everything.
-*   [**Features**](docs/features.md) - What this app can do.
-*   [**How it Works**](docs/how_it_works.md) - The AI logic explained simply.
+## 📖 Detailed Documentation
+For a deep dive into the features, installation, and how the AI works, check out the **[Full Documentation File](docs/documentation.md)**.
 
 ---
-**Simple. Professional. Powerful.**
+**Simple. Professional. Intelligent.**
