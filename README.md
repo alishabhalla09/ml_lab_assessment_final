@@ -1,102 +1,35 @@
-# 🏃 Human Activity Recognition Using Smartphones
+# 🏃 HAR Studio Pro: Human Activity Recognition
 
-Unsupervised K-Means clustering on smartphone sensor data to discover human activity patterns.
-
----
-
-## 🔗 Live Demo
-
-> **Streamlit App:** [Paste your deployed link here]
+This project helps you understand human movements (like walking or standing) using data from smartphone sensors. It uses Artificial Intelligence to find patterns and show them in a beautiful dashboard.
 
 ---
 
-## 📖 About the Project
+## 🚀 Quick Start
+To run this project right now:
 
-This project applies **unsupervised machine learning** on the **UCI HAR Dataset** to group smartphone accelerometer and gyroscope readings into activity clusters — without using any labels during training.
+1. **Install libraries**:
+   ```bash
+   pip install streamlit pandas numpy matplotlib seaborn scikit-learn
+   ```
 
-**Key highlights:**
-- Dataset: **7,352 samples** × **561 sensor features** from Samsung Galaxy S II
-- **K-Means Clustering** (K=6) with **PCA** dimensionality reduction
-- Interactive **Streamlit dashboard** for real-time activity prediction
-- **Adjusted Rand Index = 0.42** — moderate cluster–label agreement
+2. **Prepare the AI**: (Run this first to train the model)
+   ```bash
+   python analysis.py
+   ```
 
----
-
-## 📁 Project Structure
-
-```
-lab_assessment/
-│
-├── data/
-│   ├── train.csv              # Training data (7,352 samples)
-│   └── test.csv               # Testing data (2,947 samples)
-│
-├── models/
-│   ├── kmeans_model.pkl       # Trained K-Means model
-│   ├── scaler.pkl             # Fitted StandardScaler
-│   ├── pca_model.pkl          # Fitted PCA transformer
-│   └── feature_names.pkl      # Feature names list
-│
-├── visualizations/
-│   ├── elbow_method.png       # Elbow + Silhouette plot
-│   ├── pca_2d_visualization.png
-│   ├── pca_3d_visualization.png
-│   ├── cluster_vs_actual_heatmap.png
-│   └── cluster_radar_charts.png
-│
-├── code.ipynb                 # Jupyter Notebook (complete analysis)
-├── analysis.py                # Python script (ML pipeline)
-├── app.py                     # Streamlit web application
-└── README.md                  # This file
-```
+3. **Open the Dashboard**:
+   ```bash
+   streamlit run app.py
+   ```
 
 ---
 
-## 🚀 How to Run
+## � Learn More
+For more details, check out these files:
 
-```bash
-# Install dependencies
-pip install pandas numpy scikit-learn matplotlib seaborn streamlit plotly joblib
-
-# Run the analysis
-python analysis.py
-
-# Launch the dashboard
-streamlit run app.py
-```
+*   [**Installation Guide**](docs/installation.md) - How to set up everything.
+*   [**Features**](docs/features.md) - What this app can do.
+*   [**How it Works**](docs/how_it_works.md) - The AI logic explained simply.
 
 ---
-
-## Plotly
-
-Plotly is used in 
-app.py
- to create interactive charts inside the Streamlit dashboard — things like the 2D PCA scatter plot, cluster bar chart, and donut chart. Unlike Matplotlib (which makes static images), Plotly charts let users hover, zoom, and pan directly in the browser.
-
-## Joblib
-
-Joblib is used to save and load the trained ML models (
-.pkl
- files). Instead of re-training K-Means every time the app starts, we:
-
-Train once → joblib.dump(model, 'file.pkl') (saves to disk)
-Load later → joblib.load('file.pkl') (instant, no re-training)
-It saves these 4 files in models/:
-
-kmeans_model.pkl
- — the trained K-Means clusterer
-scaler.pkl
- — the StandardScaler (for normalizing new inputs)
-pca_model.pkl
- — the PCA transformer (for dimensionality reduction)
-feature_names.pkl
- — list of 561 feature names
-In short: Plotly = interactive graphs, Joblib = save/load models.
-
-## 🛠️ Tech Stack
-
-Python · Pandas · NumPy · Scikit-learn · Matplotlib · Seaborn · Plotly · Streamlit
-
----
-
-*ML & Pattern Recognition Lab Assessment · 2026*
+**Simple. Professional. Powerful.**

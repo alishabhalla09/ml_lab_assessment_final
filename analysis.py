@@ -22,7 +22,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score, adjusted_rand_score, confusion_matrix
-import joblib
+import pickle
 import warnings
 import os
 
@@ -254,11 +254,17 @@ if y is not None:
 # ──────────────────────────────────────────────────────
 print("\n\n🧠 STEP 8: Cluster Interpretation...")
 
+# Generate Readable Feature Names using utils
+from utils import get_readable_mapping
+readable_feature_mapping = get_readable_mapping(feature_names)
+
 # Key features for interpretation
 key_features = [
-    'tBodyAcc-mean()-X', 'tBodyAcc-mean()-Y', 'tBodyAcc-mean()-Z',
-    'tGravityAcc-mean()-X', 'tGravityAcc-mean()-Y', 'tGravityAcc-mean()-Z',
-    'tBodyGyro-mean()-X', 'tBodyGyro-mean()-Y', 'tBodyGyro-mean()-Z'
+    'tBodyAcc-mean()-X', 'tBodyAcc-mean()-Z',
+    'tGravityAcc-mean()-X', 'tGravityAcc-mean()-Y',
+    'tBodyGyro-mean()-X', 'tBodyGyro-mean()-Z',
+    'tBodyAccMag-mean()', 'tGravityAccMag-mean()',
+    'fBodyAcc-mean()-X', 'fBodyAcc-std()-Y'
 ]
 
 key_idx = [feature_names.index(f) for f in key_features if f in feature_names]
@@ -268,9 +274,11 @@ for cluster_id in range(6):
     centroid = kmeans.cluster_centers_[cluster_id]
     print(f"\n   Cluster {cluster_id}:")
     for fi, fname in zip(key_idx, key_features):
-        print(f"     {fname:35s} = {centroid[fi]:+.4f}")
+        readable_name = readable_feature_mapping.get(fname, fname)
+        print(f"     {readable_name:40s} = {centroid[fi]:+.4f}")
 
 # Identify which cluster maps to which activity
+cluster_activity_mapping = {}
 if y is not None:
     print("\n\n   Cluster → Most Common Activity Mapping:")
     df_result = pd.DataFrame({'Activity': y, 'Cluster': cluster_labels})
@@ -278,6 +286,7 @@ if y is not None:
         cluster_data = df_result[df_result['Cluster'] == cluster_id]
         if len(cluster_data) > 0:
             most_common = cluster_data['Activity'].mode()[0]
+            cluster_activity_mapping[cluster_id] = most_common
             pct = (cluster_data['Activity'] == most_common).sum() / len(cluster_data) * 100
             print(f"     Cluster {cluster_id} → {most_common} ({pct:.1f}% match)")
 
@@ -305,17 +314,23 @@ plt.close()
 print("   ✅ Radar charts saved as 'cluster_radar_charts.png'")
 
 # ──────────────────────────────────────────────────────
-# STEP 9: Save Models for Streamlit App
+# STEP 9: Save Models & Metadata for Streamlit App
 # ──────────────────────────────────────────────────────
-print("\n\n💾 STEP 9: Saving Models for Streamlit App...")
-joblib.dump(kmeans, os.path.join(MODEL_DIR, 'kmeans_model.pkl'))
-joblib.dump(scaler, os.path.join(MODEL_DIR, 'scaler.pkl'))
-joblib.dump(pca, os.path.join(MODEL_DIR, 'pca_model.pkl'))
-joblib.dump(feature_names, os.path.join(MODEL_DIR, 'feature_names.pkl'))
-print("   ✅ kmeans_model.pkl saved")
-print("   ✅ scaler.pkl saved")
-print("   ✅ pca_model.pkl saved")
-print("   ✅ feature_names.pkl saved")
+print("\n\n💾 STEP 9: Saving Models & Metadata for Streamlit App...")
+artifacts = {
+    'kmeans': kmeans,
+    'scaler': scaler,
+    'pca': pca,
+    'feature_names': feature_names,
+    'readable_feature_mapping': readable_feature_mapping,
+    'cluster_activity_mapping': cluster_activity_mapping,
+    'important_features': key_features
+}
+
+for name, obj in artifacts.items():
+    with open(os.path.join(MODEL_DIR, f'{name}.pkl'), 'wb') as f:
+        pickle.dump(obj, f)
+    print(f"   ✅ {name}.pkl saved")
 
 print("\n" + "=" * 70)
 print("  ✅ ANALYSIS COMPLETE!")
